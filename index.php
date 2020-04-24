@@ -1,30 +1,9 @@
 <?php
-define('ENGINE_DIR', 'Engine');
-define('METHOD_DIR', 'Methods');
-define('SERVICES_DIR', 'Services');
+header('Content-Type: application/json');
 
-function loadClass(string $dir)
-{
-    $catalog = opendir($dir);
-    while ($filename = readdir($catalog)) {
-        if ($filename == '.' || $filename == '..') {
-            continue;
-        }
-        $path = $dir . DIRECTORY_SEPARATOR . $filename;
-        if (is_dir($path)) {
-            loadClass($dir);
-        } else {
-            include_once($path);
-        }
-    }
-    closedir($catalog);
-}
+require_once('./vendor/autoload.php'); //include composer autoloader
 
-loadClass('.' . DIRECTORY_SEPARATOR . ENGINE_DIR);
-loadClass('.' . DIRECTORY_SEPARATOR . METHOD_DIR);
-loadClass('.' . DIRECTORY_SEPARATOR . SERVICES_DIR);
-
-try {
+try {       //try to execute request
     $request = \Engine\RequestDecoder::getRequest();
     $data = \Engine\Executor::execute($request);
     $response = [

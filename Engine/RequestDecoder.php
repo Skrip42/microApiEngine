@@ -11,7 +11,7 @@ class RequestDecoder
             'method' => '',
             'params' => []
         ];
-        $request['class'] = '\\' . METHOD_DIR. str_replace('/', '\\', ucwords($_SERVER['REQUEST_URI'], '/'));
+        $request['class'] = '\\Methods' .  str_replace('/', '\\', ucwords($_SERVER['REQUEST_URI'], '/'));
         if ($pos = strpos($request['class'], '?')) {
             $request['class'] = substr($request['class'], 0, $pos);
         }
